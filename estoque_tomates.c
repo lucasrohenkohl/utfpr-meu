@@ -16,9 +16,11 @@ int main(void)
 {
     int codigo[TAM_MAX], quantidade[TAM_MAX], total_cadastros = 0;
     char nome[TAM_MAX][50], caractere;
+    char tipos[5][50] = {"Tomate Italiano", "Tomate Cereja", "Tomate Saladete",
+                         "Tomate Santa Cruz", "Tomate Debora"};
     float preco[TAM_MAX];
     int opcao = -1, i, posicao, codigo_busca, campo, movimento = 0, caixas = 0;
-    int entrada_valida, nome_preenchido, fim_entrada = 0;
+    int entrada_valida, nome_preenchido, tipo, fim_entrada = 0;
     int maior_preco, sem_estoque;
     double numero, valor_total, total_caixas;
 
@@ -97,33 +99,64 @@ int main(void)
 
                 if (opcao == 1) {
                     codigo[total_cadastros] = codigo_busca;
+                    printf("\nEscolha o tipo de tomate:\n");
+                    for (i = 0; i < 5; i++) printf("%d - %s\n", i + 1, tipos[i]);
+                    printf("6 - Outro (digitar nome)\n");
                     do {
-                        printf("Nome do tipo de tomate (ate 49 caracteres): ");
-                        entrada_valida = scanf("%49[^\n]", nome[total_cadastros]);
+                        printf("Tipo: ");
+                        entrada_valida = scanf("%lf", &numero);
                         if (entrada_valida == EOF) {
                             fim_entrada = 1;
                             break;
                         }
-                        nome_preenchido = 0;
-                        if (entrada_valida == 1) {
-                            for (i = 0; nome[total_cadastros][i] != '\0'; i++) {
-                                if (nome[total_cadastros][i] != ' '
-                                    && nome[total_cadastros][i] != '\t'
-                                    && nome[total_cadastros][i] != '\r')
-                                    nome_preenchido = 1;
-                            }
-                            if (i > 0 && nome[total_cadastros][i - 1] == '\r')
-                                nome[total_cadastros][i - 1] = '\0';
-                        }
-                        /* Texto restante indica um nome maior que o permitido. */
                         while (scanf("%c", &caractere) == 1 && caractere != '\n') {
-                            if (caractere != '\r') entrada_valida = 0;
+                            if (caractere != ' ' && caractere != '\t' && caractere != '\r')
+                                entrada_valida = 0;
                         }
-                        if (entrada_valida != 1 || nome_preenchido == 0) {
+                        if (entrada_valida == 1 && numero >= 1 && numero <= 6
+                            && numero == (int)numero) {
+                            tipo = (int)numero;
+                        } else {
                             entrada_valida = 0;
-                            printf("Nome invalido. Use de 1 a 49 caracteres, sem deixar em branco.\n");
+                            printf("Tipo invalido. Escolha um numero inteiro de 1 a 6.\n");
                         }
                     } while (entrada_valida != 1);
+                    if (fim_entrada) break;
+
+                    if (tipo <= 5) {
+                        /* Copia o nome escolhido usando somente matriz e for. */
+                        for (i = 0; tipos[tipo - 1][i] != '\0'; i++)
+                            nome[total_cadastros][i] = tipos[tipo - 1][i];
+                        nome[total_cadastros][i] = '\0';
+                    } else {
+                        do {
+                            printf("Nome do tipo de tomate (ate 49 caracteres): ");
+                            entrada_valida = scanf("%49[^\n]", nome[total_cadastros]);
+                            if (entrada_valida == EOF) {
+                                fim_entrada = 1;
+                                break;
+                            }
+                            nome_preenchido = 0;
+                            if (entrada_valida == 1) {
+                                for (i = 0; nome[total_cadastros][i] != '\0'; i++) {
+                                    if (nome[total_cadastros][i] != ' '
+                                        && nome[total_cadastros][i] != '\t'
+                                        && nome[total_cadastros][i] != '\r')
+                                        nome_preenchido = 1;
+                                }
+                                if (i > 0 && nome[total_cadastros][i - 1] == '\r')
+                                    nome[total_cadastros][i - 1] = '\0';
+                            }
+                            /* Texto restante indica um nome maior que o permitido. */
+                            while (scanf("%c", &caractere) == 1 && caractere != '\n') {
+                                if (caractere != '\r') entrada_valida = 0;
+                            }
+                            if (entrada_valida != 1 || nome_preenchido == 0) {
+                                entrada_valida = 0;
+                                printf("Nome invalido. Use de 1 a 49 caracteres, sem deixar em branco.\n");
+                            }
+                        } while (entrada_valida != 1);
+                    }
                 } else {
                     if (posicao == -1) {
                         printf("Codigo nao encontrado.\n");

@@ -3,7 +3,7 @@
 Trabalho de Algoritmos e Fundamentos de Programação em **C**, para executar no
 console do Code::Blocks com compilador GCC.
 
-O programa controla até **20 tipos de tomate**. Cada cadastro contém código
+O programa controla até **20 cadastros de tomate**. Cada cadastro contém código
 positivo e único, nome de até 49 caracteres, quantidade inteira de caixas e
 preço em reais por caixa. Os dados ficam em memória e são perdidos ao encerrar.
 
@@ -41,12 +41,29 @@ No Windows, o executável será `estoque_tomates.exe`.
 | 6 | Limpar o estoque, apagando todos os cadastros e liberando as 20 vagas. |
 | 0 | Encerrar o programa. |
 
+No cadastro, depois do código, escolha o tipo pelo número:
+
+| Número | Tipo de tomate |
+| --- | --- |
+| 1 | Italiano |
+| 2 | Cereja |
+| 3 | Saladete |
+| 4 | Santa Cruz |
+| 5 | Débora |
+| 6 | Outro — permite digitar um nome de até 49 caracteres. |
+
+Nas opções 1 a 5, o nome é preenchido automaticamente. Depois da escolha,
+informe a quantidade e o preço por caixa. O tipo escolhido aparece na
+listagem, na consulta e no relatório. Um mesmo tipo pode ter cadastros com
+códigos diferentes; cada código continua sendo único.
+
 - Digite **uma resposta por linha** e use ponto nos preços, como `35.50`.
 - A quantidade inicial pode ser zero; o preço deve ser positivo.
 - Entradas e saídas exigem quantidade inteira maior que zero.
 - Códigos e quantidades respeitam o limite de `int` informado na tela; entradas
   que ultrapassariam esse limite de estoque são bloqueadas.
-- Nomes podem conter espaços, mas não podem ficar vazios ou exceder 49 caracteres.
+- Na opção de tipo **6 — Outro**, nomes podem conter espaços, mas não podem
+  ficar vazios ou exceder 49 caracteres.
   Para nomes acentuados, o limite é de 49 bytes na codificação do console.
 - Letras em campos numéricos, números fracionados em quantidades e conteúdo
   extra na mesma linha são rejeitados, com nova solicitação da entrada.
@@ -68,9 +85,15 @@ cadastros. Não é necessário percorrer e zerar cada vetor.
 
 ## Exemplo para conferir
 
-Cadastre `1 / Tomate Italiano / 10 / 30.00`,
-`2 / Tomate Cereja / 5 / 50.00` e `3 / Tomate Saladete / 0 / 20.00`,
-digitando cada campo em uma linha na opção 1.
+Na opção 1 do menu principal, cadastre os seguintes valores na ordem
+**código / número do tipo / caixas / preço**:
+
+- `1 / 1 / 10 / 30.00` — Italiano;
+- `2 / 2 / 5 / 50.00` — Cereja;
+- `3 / 3 / 0 / 20.00` — Saladete.
+
+Digite cada campo em uma linha. Para um nome personalizado, escolha o tipo 6
+e digite o nome antes da quantidade e do preço.
 
 O relatório deverá mostrar **15 caixas**, **R$ 550.00** em estoque,
 **Tomate Cereja** com maior preço (**R$ 50.00**), média de **R$ 36.67** por caixa
@@ -89,6 +112,9 @@ caracteres. O contador `total_cadastros` delimita as posições válidas.
 Cadastro, consulta e movimentação compartilham a leitura e a busca por código.
 Um `for` lê os dois campos numéricos do cadastro ou da movimentação, reduzindo
 a repetição das validações.
+
+Os cinco tipos prontos ficam em uma matriz de caracteres. Um `for` copia o nome
+escolhido para o cadastro, sem funções adicionais nem biblioteca de strings.
 
 Não há funções próprias além de `main`, structs, variáveis ponteiro, alocação
 dinâmica ou gravação de dados em arquivos. O `&` em `scanf` é necessário para
