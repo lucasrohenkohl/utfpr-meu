@@ -38,6 +38,7 @@ No Windows, o executável será `estoque_tomates.exe`.
 | 3 | Buscar pelo código e mostrar todos os campos do cadastro. |
 | 4 | Registrar entrada ou saída de caixas, sem permitir estoque negativo. |
 | 5 | Mostrar total de caixas, valor do estoque, maior preço, média e reposições. |
+| 6 | Limpar o estoque, apagando todos os cadastros e liberando as 20 vagas. |
 | 0 | Encerrar o programa. |
 
 - Digite **uma resposta por linha** e use ponto nos preços, como `35.50`.
@@ -59,6 +60,12 @@ indisponível. O maior preço considera todos os cadastros, inclusive os sem
 estoque; em empate, permanece o primeiro cadastrado. A reposição lista os tipos
 com quantidade zero.
 
+A opção **6 — Limpar estoque** apaga todos os cadastros da execução atual,
+incluindo códigos, nomes, quantidades e preços. Depois dela, é possível começar
+novamente e reutilizar os códigos. A limpeza é feita zerando `total_cadastros`:
+as posições antigas deixam de ser consultadas e são sobrescritas pelos novos
+cadastros. Não é necessário percorrer e zerar cada vetor.
+
 ## Exemplo para conferir
 
 Cadastre `1 / Tomate Italiano / 10 / 30.00`,
@@ -79,14 +86,20 @@ Toda a lógica está em `main`, com `printf` e `scanf`. O programa usa `if/else`
 `switch-case`, `do-while`, `for`, `while`, vetores de tamanho fixo e matriz de
 caracteres. O contador `total_cadastros` delimita as posições válidas.
 
+Cadastro, consulta e movimentação compartilham a leitura e a busca por código.
+Um `for` lê os dois campos numéricos do cadastro ou da movimentação, reduzindo
+a repetição das validações.
+
 Não há funções próprias além de `main`, structs, variáveis ponteiro, alocação
 dinâmica ou gravação de dados em arquivos. O `&` em `scanf` é necessário para
 ler as variáveis, conforme o uso básico de entrada de dados em C.
 
 As entradas numéricas são lidas em uma variável `double` para conferir a faixa
-e rejeitar frações antes da conversão para `int`. `limits.h` e `float.h` fornecem
-os limites dos tipos. Os preços são armazenados em `float`; os totais usam
-`double` e são exibidos com duas casas decimais.
+e rejeitar frações antes da conversão para `int`. O limite inteiro é definido
+pela constante `LIMITE_INTEIRO`, com valor 2147483647 para o GCC/MinGW usado no
+Code::Blocks. Não há uso de `limits.h`. `float.h` fornece o limite do preço.
+Os preços são armazenados em `float`; os totais usam `double` e são exibidos
+com duas casas decimais.
 
 ## Entrega
 
