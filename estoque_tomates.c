@@ -16,8 +16,7 @@ int main(void)
 {
     int codigo[TAM_MAX], quantidade[TAM_MAX], total_cadastros = 0;
     char nome[TAM_MAX][50], caractere;
-    char tipos[5][50] = {"Tomate Italiano", "Tomate Cereja", "Tomate Saladete",
-                         "Tomate Santa Cruz", "Tomate Debora"};
+    char tipos[5][50] = {"Italiano", "Cereja", "Saladete", "Santa Cruz", "Debora"};
     float preco[TAM_MAX];
     int opcao = -1, i, posicao, codigo_busca, campo, movimento = 0, caixas = 0;
     int entrada_valida, nome_preenchido, tipo, fim_entrada = 0;

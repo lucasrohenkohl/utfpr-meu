@@ -52,7 +52,8 @@ No cadastro, depois do código, escolha o tipo pelo número:
 | 5 | Débora |
 | 6 | Outro — permite digitar um nome de até 49 caracteres. |
 
-Nas opções 1 a 5, o nome é preenchido automaticamente. Depois da escolha,
+Nas opções 1 a 5, apenas o nome do tipo é preenchido automaticamente
+(por exemplo, `Italiano`). Depois da escolha,
 informe a quantidade e o preço por caixa. O tipo escolhido aparece na
 listagem, na consulta e no relatório. Um mesmo tipo pode ter cadastros com
 códigos diferentes; cada código continua sendo único.
@@ -96,8 +97,8 @@ Digite cada campo em uma linha. Para um nome personalizado, escolha o tipo 6
 e digite o nome antes da quantidade e do preço.
 
 O relatório deverá mostrar **15 caixas**, **R$ 550.00** em estoque,
-**Tomate Cereja** com maior preço (**R$ 50.00**), média de **R$ 36.67** por caixa
-e **1 tipo sem estoque**, o Tomate Saladete.
+**Cereja** com maior preço (**R$ 50.00**), média de **R$ 36.67** por caixa
+e **1 tipo sem estoque**, o Saladete.
 
 Registre uma entrada de 3 caixas do Italiano: o saldo passa a 13. Uma saída de
 4 passa o saldo a 9. Uma tentativa de saída de 10 é recusada, mantendo as 9
