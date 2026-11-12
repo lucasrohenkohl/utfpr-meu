@@ -39,6 +39,7 @@ No Windows, o executável será `estoque_tomates.exe`.
 | 4 | Registrar entrada ou saída de caixas, sem permitir estoque negativo. |
 | 5 | Mostrar total de caixas, valor do estoque, maior preço, média e reposições. |
 | 6 | Limpar o estoque, apagando todos os cadastros e liberando as 20 vagas. |
+| 7 | Apagar somente um cadastro, informando seu código. |
 | 0 | Encerrar o programa. |
 
 No cadastro, depois do código, escolha o tipo pelo número:
@@ -84,6 +85,12 @@ novamente e reutilizar os códigos. A limpeza é feita zerando `total_cadastros`
 as posições antigas deixam de ser consultadas e são sobrescritas pelos novos
 cadastros. Não é necessário percorrer e zerar cada vetor.
 
+Para apagar **um cadastro por vez**, escolha **7 — Apagar um cadastro por código**
+no menu principal e informe o código desejado. O programa remove esse cadastro
+completo, incluindo nome, quantidade e preço, e mantém os demais na mesma ordem.
+Se o código não existir, nenhuma alteração é feita. Cada exclusão libera uma
+vaga, e o código apagado pode ser usado novamente.
+
 ## Exemplo para conferir
 
 Na opção 1 do menu principal, cadastre os seguintes valores na ordem
@@ -116,12 +123,14 @@ Toda a lógica está em `main`, com `printf` e `scanf`. O programa usa `if/else`
 `switch-case`, `do-while`, `for`, `while`, vetores de tamanho fixo e matriz de
 caracteres. O contador `total_cadastros` delimita as posições válidas.
 
-Cadastro, consulta e movimentação compartilham a leitura e a busca por código.
+Cadastro, consulta, movimentação e exclusão compartilham a leitura e a busca por código.
 Um `for` lê os dois campos numéricos do cadastro ou da movimentação, reduzindo
 a repetição das validações.
 
 Os cinco tipos prontos ficam em uma matriz de caracteres. Um `for` copia o nome
 escolhido para o cadastro, sem funções adicionais nem biblioteca de strings.
+Na exclusão individual, laços `for` deslocam os vetores e a matriz de nomes para
+preencher a posição removida, e o contador de cadastros é decrementado.
 
 Não há funções próprias além de `main`, structs, variáveis ponteiro, alocação
 dinâmica ou gravação de dados em arquivos. O `&` em `scanf` é necessário para

@@ -4,7 +4,7 @@
  * Turma: PREENCHER
  * Data: 11/11/2026
  * Tema: gestao de estoque de tomates em caixas inteiras.
- * Cadastro, consulta, movimentacao, relatorio e limpeza em memoria.
+ * Cadastro, consulta, movimentacao, relatorio e exclusao em memoria.
  */
 #include <stdio.h>
 #include <float.h>
@@ -18,7 +18,7 @@ int main(void)
     char nome[TAM_MAX][50], caractere;
     char tipos[5][50] = {"Italiano", "Cereja", "Saladete", "Santa Cruz", "Debora"};
     float preco[TAM_MAX];
-    int opcao = -1, i, posicao, codigo_busca, campo, movimento = 0, caixas = 0;
+    int opcao = -1, i, j, posicao, codigo_busca, campo, movimento = 0, caixas = 0;
     int entrada_valida, nome_preenchido, tipo, fim_entrada = 0;
     int maior_preco, sem_estoque;
     double numero, valor_total, total_caixas;
@@ -28,7 +28,8 @@ int main(void)
     do {
         printf("\n1 - Cadastrar\n2 - Listar\n3 - Buscar por codigo\n"
                "4 - Entrada ou saida\n5 - Relatorio\n"
-               "6 - Limpar estoque (apagar todos os cadastros)\n0 - Sair\n");
+               "6 - Limpar estoque (apagar todos os cadastros)\n"
+               "7 - Apagar um cadastro por codigo\n0 - Sair\n");
         do {
             printf("Opcao: ");
             entrada_valida = scanf("%lf", &numero);
@@ -46,7 +47,7 @@ int main(void)
                 opcao = (int)numero;
             } else {
                 entrada_valida = 0;
-                printf("Opcao invalida. Digite um inteiro de 0 a 6.\n");
+                printf("Opcao invalida. Digite um inteiro de 0 a 7.\n");
             }
         } while (entrada_valida != 1);
         if (fim_entrada) break;
@@ -55,7 +56,8 @@ int main(void)
             case 1:
             case 3:
             case 4:
-                /* As tres acoes compartilham a leitura e a busca do codigo. */
+            case 7:
+                /* Estas acoes compartilham a leitura e a busca do codigo. */
                 if (opcao == 1 && total_cadastros == TAM_MAX) {
                     printf("Capacidade esgotada: o limite e de %d cadastros.\n", TAM_MAX);
                     break;
@@ -164,6 +166,20 @@ int main(void)
                     printf("Codigo: %d\nNome: %s\nCaixas em estoque: %d\nPreco por caixa: R$ %.2f\n",
                            codigo[posicao], nome[posicao], quantidade[posicao], preco[posicao]);
                     if (opcao == 3) break;
+                    if (opcao == 7) {
+                        /* Desloca todos os campos para preencher a vaga apagada. */
+                        for (i = posicao; i < total_cadastros - 1; i++) {
+                            codigo[i] = codigo[i + 1];
+                            quantidade[i] = quantidade[i + 1];
+                            preco[i] = preco[i + 1];
+                            for (j = 0; nome[i + 1][j] != '\0'; j++)
+                                nome[i][j] = nome[i + 1][j];
+                            nome[i][j] = '\0';
+                        }
+                        total_cadastros--;
+                        printf("Cadastro de codigo %d apagado.\n", codigo_busca);
+                        break;
+                    }
                 }
                 if (fim_entrada) break;
 
@@ -303,7 +319,7 @@ int main(void)
             case 0:
                 break;
             default:
-                printf("Opcao invalida. Escolha uma opcao de 0 a 6.\n");
+                printf("Opcao invalida. Escolha uma opcao de 0 a 7.\n");
                 break;
         }
     } while (opcao != 0 && fim_entrada == 0);
