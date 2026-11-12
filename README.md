@@ -50,7 +50,7 @@ No cadastro, depois do código, escolha o tipo pelo número:
 | 3 | Saladete |
 | 4 | Santa Cruz |
 | 5 | Débora |
-| 6 | Outro — permite digitar um nome de até 49 caracteres. |
+| 6 | Digitar outro nome — permite cadastrar qualquer nome de até 49 caracteres. |
 
 Nas opções 1 a 5, apenas o nome do tipo é preenchido automaticamente
 (por exemplo, `Italiano`). Depois da escolha,
@@ -63,7 +63,7 @@ códigos diferentes; cada código continua sendo único.
 - Entradas e saídas exigem quantidade inteira maior que zero.
 - Códigos e quantidades respeitam o limite de `int` informado na tela; entradas
   que ultrapassariam esse limite de estoque são bloqueadas.
-- Na opção de tipo **6 — Outro**, nomes podem conter espaços, mas não podem
+- Na opção de tipo **6 — Digitar outro nome**, nomes podem conter espaços, mas não podem
   ficar vazios ou exceder 49 caracteres.
   Para nomes acentuados, o limite é de 49 bytes na codificação do console.
 - Letras em campos numéricos, números fracionados em quantidades e conteúdo
@@ -95,6 +95,12 @@ Na opção 1 do menu principal, cadastre os seguintes valores na ordem
 
 Digite cada campo em uma linha. Para um nome personalizado, escolha o tipo 6
 e digite o nome antes da quantidade e do preço.
+
+Por exemplo, para cadastrar **Caqui**, escolha **1 — Cadastrar** no menu
+principal, informe um código novo, escolha **6 — Digitar outro nome** e digite
+`Caqui`. Em seguida, informe as caixas e o preço. Também é possível usar nomes
+como `Rosa`, `Amarelo` ou `Tomate da horta`, que aparecerão nas listagens,
+consultas e relatórios.
 
 O relatório deverá mostrar **15 caixas**, **R$ 550.00** em estoque,
 **Cereja** com maior preço (**R$ 50.00**), média de **R$ 36.67** por caixa

@@ -98,9 +98,9 @@ int main(void)
 
                 if (opcao == 1) {
                     codigo[total_cadastros] = codigo_busca;
-                    printf("\nEscolha o tipo de tomate:\n");
+                    printf("\nEscolha um tipo pronto ou digite outro nome pela opcao 6:\n");
                     for (i = 0; i < 5; i++) printf("%d - %s\n", i + 1, tipos[i]);
-                    printf("6 - Outro (digitar nome)\n");
+                    printf("6 - Digitar outro nome\n");
                     do {
                         printf("Tipo: ");
                         entrada_valida = scanf("%lf", &numero);
@@ -129,7 +129,7 @@ int main(void)
                         nome[total_cadastros][i] = '\0';
                     } else {
                         do {
-                            printf("Nome do tipo de tomate (ate 49 caracteres): ");
+                            printf("Digite o nome desejado (ate 49 caracteres): ");
                             entrada_valida = scanf("%49[^\n]", nome[total_cadastros]);
                             if (entrada_valida == EOF) {
                                 fim_entrada = 1;
