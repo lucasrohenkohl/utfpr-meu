@@ -37,7 +37,7 @@ No Windows, o executável será `estoque_tomates.exe`.
 | 2 | Listar todos os cadastros, com um separador a cada cinco registros. |
 | 3 | Buscar pelo código e mostrar todos os campos do cadastro. |
 | 4 | Registrar entrada ou saída de caixas, sem permitir estoque negativo. |
-| 5 | Mostrar total de caixas, valor do estoque, maior preço, média e reposições. |
+| 5 | Mostrar cada produto com seu subtotal e o resumo de caixas, valor, maior preço, média e reposições. |
 | 6 | Limpar o estoque, apagando todos os cadastros e liberando as 20 vagas. |
 | 7 | Apagar somente um cadastro, informando seu código. |
 | 0 | Encerrar o programa. |
@@ -72,6 +72,11 @@ códigos diferentes; cada código continua sendo único.
 - Código inexistente, estoque insuficiente e falta de cadastros geram mensagens
   informativas. O fim da entrada encerra o programa; cadastros incompletos não
   são contabilizados.
+
+O relatório mostra **todos os produtos**, com código, nome, quantidade de caixas,
+preço por caixa e subtotal (`quantidade × preço`). Depois dos produtos, o resumo
+apresenta o total de caixas e a soma dos subtotais. Os valores refletem os saldos
+atuais, após entradas, saídas ou exclusões. Gerar o relatório não altera os dados.
 
 O valor do estoque é a soma de `quantidade × preço`. A média é esse valor
 dividido pelo total de caixas disponíveis. Sem caixas, a média é informada como
@@ -116,6 +121,12 @@ e **1 tipo sem estoque**, o Saladete.
 Registre uma entrada de 3 caixas do Italiano: o saldo passa a 13. Uma saída de
 4 passa o saldo a 9. Uma tentativa de saída de 10 é recusada, mantendo as 9
 caixas. Após essas operações, o relatório deve indicar 14 caixas e R$ 520.00.
+
+Outro exemplo: **40 caixas de Italiano a R$ 100.00** têm subtotal de R$ 4000.00;
+**100 caixas de Débora a R$ 150.00** têm subtotal de R$ 15000.00. O resumo deve
+mostrar **140 caixas e R$ 19000.00**, com os dois produtos detalhados. Após uma
+entrada de 10 caixas de Débora, seu saldo passa a 110 e o resumo passa a
+**150 caixas e R$ 20500.00**.
 
 ## Estruturas utilizadas
 

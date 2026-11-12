@@ -21,7 +21,7 @@ int main(void)
     int opcao = -1, i, j, posicao, codigo_busca, campo, movimento = 0, caixas = 0;
     int entrada_valida, nome_preenchido, tipo, fim_entrada = 0;
     int maior_preco, sem_estoque;
-    double numero, valor_total, total_caixas;
+    double numero, valor_total, total_caixas, subtotal;
 
     printf("GESTAO DE ESTOQUE DE TOMATES\n");
     printf("Caixas inteiras. Precos em reais por caixa, com ponto (ex.: 35.50).\n");
@@ -278,17 +278,22 @@ int main(void)
                     printf("Nenhum tipo de tomate cadastrado.\n");
                     break;
                 }
+                printf("\n--- RELATORIO DO ESTOQUE ---\n");
                 valor_total = 0;
                 total_caixas = 0;
                 maior_preco = 0;
                 sem_estoque = 0;
                 for (i = 0; i < total_cadastros; i++) {
-                    valor_total += quantidade[i] * (double)preco[i];
+                    subtotal = quantidade[i] * (double)preco[i];
+                    printf("Codigo: %d | Nome: %s\n", codigo[i], nome[i]);
+                    printf("Caixas: %d | Preco/caixa: R$ %.2f | Subtotal: R$ %.2f\n\n",
+                           quantidade[i], preco[i], subtotal);
+                    valor_total += subtotal;
                     total_caixas += quantidade[i];
                     if (preco[i] > preco[maior_preco]) maior_preco = i;
                     if (quantidade[i] == 0) sem_estoque++;
                 }
-                printf("\n--- RELATORIO DO ESTOQUE ---\n");
+                printf("--- RESUMO DO ESTOQUE ---\n");
                 printf("Tipos de tomate cadastrados: %d\nTotal de caixas: %.0f\n", total_cadastros, total_caixas);
                 printf("Valor total do estoque: R$ %.2f\n", valor_total);
                 printf("Maior preco por caixa: %s (codigo %d) - R$ %.2f\n",
