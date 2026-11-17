@@ -4,8 +4,8 @@ Trabalho de Algoritmos e Fundamentos de Programação em **C**, para executar no
 console do Code::Blocks com compilador GCC.
 
 O programa controla até **20 cadastros de tomate**. Cada cadastro contém código
-positivo e único, nome de até 49 caracteres, quantidade inteira de caixas e
-preço em reais por caixa. Os dados ficam em memória e são perdidos ao encerrar.
+positivo e único, nome de até 49 caracteres, unidade (caixas ou kg), quantidade e
+preço em reais por caixa ou por kg. Os dados ficam em memória e são perdidos ao encerrar.
 
 ## Abrir no Code::Blocks
 
@@ -36,8 +36,8 @@ No Windows, o executável será `estoque_tomates.exe`.
 | 1 | Cadastrar um tipo de tomate; bloqueia códigos repetidos e o 21º cadastro. |
 | 2 | Listar todos os cadastros, com um separador a cada cinco registros. |
 | 3 | Buscar pelo código e mostrar todos os campos do cadastro. |
-| 4 | Registrar entrada ou saída de caixas, sem permitir estoque negativo. |
-| 5 | Mostrar cada produto com seu subtotal e o resumo de caixas, valor, maior preço, média e reposições. |
+| 4 | Registrar entrada ou saída na unidade do cadastro, sem permitir estoque negativo. |
+| 5 | Mostrar cada produto, seu subtotal e os totais de caixas, kg e valor do estoque. |
 | 6 | Limpar o estoque, apagando todos os cadastros e liberando as 20 vagas. |
 | 7 | Apagar somente um cadastro, informando seu código. |
 | 0 | Encerrar o programa. |
@@ -54,63 +54,73 @@ No cadastro, depois do código, escolha o tipo pelo número:
 | 6 | Digitar outro nome — permite cadastrar qualquer nome de até 49 caracteres. |
 
 Nas opções 1 a 5, apenas o nome do tipo é preenchido automaticamente
-(por exemplo, `Italiano`). Depois da escolha,
-informe a quantidade e o preço por caixa. O tipo escolhido aparece na
-listagem, na consulta e no relatório. Um mesmo tipo pode ter cadastros com
-códigos diferentes; cada código continua sendo único.
+(por exemplo, `Italiano`). Depois da escolha, selecione a unidade:
 
-- Digite **uma resposta por linha** e use ponto nos preços, como `35.50`.
+- **1 — Caixas:** quantidade inteira e preço por caixa.
+- **2 — Quilogramas (kg):** peso com até três casas decimais e preço por kg.
+
+Em seguida, informe a quantidade e o preço. O tipo e a unidade aparecem na
+listagem, na consulta e no relatório. Um mesmo tipo pode ter cadastros com
+códigos diferentes; cada código continua sendo único. Para controlar um tipo
+em caixas e em kg, crie um cadastro para cada unidade, com códigos diferentes.
+
+- Digite **uma resposta por linha** e use ponto nos pesos e preços, como `2.500` e `35.50`.
 - A quantidade inicial pode ser zero; o preço deve ser positivo.
-- Entradas e saídas exigem quantidade inteira maior que zero.
-- Códigos e quantidades respeitam o limite de `int` informado na tela; entradas
-  que ultrapassariam esse limite de estoque são bloqueadas.
+- Entradas e saídas exigem quantidade maior que zero: caixas inteiras ou kg
+  com precisão de 0.001 kg (1 grama).
+- Códigos e caixas vão até 2147483647; cada cadastro em kg admite até
+  2147483.647 kg. Entradas que ultrapassariam esses saldos são bloqueadas.
 - Na opção de tipo **6 — Digitar outro nome**, nomes podem conter espaços, mas não podem
   ficar vazios ou exceder 49 caracteres.
   Para nomes acentuados, o limite é de 49 bytes na codificação do console.
-- Letras em campos numéricos, números fracionados em quantidades e conteúdo
-  extra na mesma linha são rejeitados, com nova solicitação da entrada.
+- Letras em campos numéricos, caixas fracionadas, pesos com frações menores
+  que um grama e conteúdo extra na mesma linha são rejeitados, com nova
+  solicitação da entrada.
 - Código inexistente, estoque insuficiente e falta de cadastros geram mensagens
   informativas. O fim da entrada encerra o programa; cadastros incompletos não
   são contabilizados.
 
-O relatório mostra **todos os produtos**, com código, nome, quantidade de caixas,
-preço por caixa e subtotal (`quantidade × preço`). Depois dos produtos, o resumo
-apresenta o total de caixas e a soma dos subtotais. Os valores refletem os saldos
+O relatório mostra **todos os produtos**, com código, nome, quantidade e unidade,
+preço por caixa ou kg e subtotal (`quantidade × preço da unidade`). Depois dos
+produtos, o resumo apresenta **total de caixas e total de kg separadamente**,
+além da soma dos subtotais em reais. Os valores refletem os saldos
 atuais, após entradas, saídas ou exclusões. Gerar o relatório não altera os dados.
 
-O valor do estoque é a soma de `quantidade × preço`. A média é esse valor
-dividido pelo total de caixas disponíveis. Sem caixas, a média é informada como
-indisponível. O maior preço considera todos os cadastros, inclusive os sem
-estoque; em empate, permanece o primeiro cadastrado. A reposição lista os tipos
-com quantidade zero.
+O maior preço e a média são calculados **separadamente por unidade**. A média
+por caixa usa o valor dos produtos em caixas dividido pelo total de caixas;
+a média por kg usa o valor dos produtos em kg dividido pelo peso total.
+Se todos os saldos de uma unidade forem zero, sua média fica indisponível.
+O maior preço considera todos os cadastros daquela unidade, inclusive os sem
+estoque; em empate, permanece o primeiro cadastrado. A reposição lista os
+cadastros com quantidade zero.
 
 A opção **6 — Limpar estoque** apaga todos os cadastros da execução atual,
-incluindo códigos, nomes, quantidades e preços. Depois dela, é possível começar
+incluindo códigos, nomes, unidades, quantidades e preços. Depois dela, é possível começar
 novamente e reutilizar os códigos. A limpeza é feita zerando `total_cadastros`:
 as posições antigas deixam de ser consultadas e são sobrescritas pelos novos
 cadastros. Não é necessário percorrer e zerar cada vetor.
 
 Para apagar **um cadastro por vez**, escolha **7 — Apagar um cadastro por código**
 no menu principal e informe o código desejado. O programa remove esse cadastro
-completo, incluindo nome, quantidade e preço, e mantém os demais na mesma ordem.
+completo, incluindo nome, unidade, quantidade e preço, e mantém os demais na mesma ordem.
 Se o código não existir, nenhuma alteração é feita. Cada exclusão libera uma
 vaga, e o código apagado pode ser usado novamente.
 
 ## Exemplo para conferir
 
 Na opção 1 do menu principal, cadastre os seguintes valores na ordem
-**código / número do tipo / caixas / preço**:
+**código / número do tipo / unidade / quantidade / preço por unidade**:
 
-- `1 / 1 / 10 / 30.00` — Italiano;
-- `2 / 2 / 5 / 50.00` — Cereja;
-- `3 / 3 / 0 / 20.00` — Saladete.
+- `1 / 1 / 1 / 10 / 30.00` — Italiano em caixas;
+- `2 / 2 / 1 / 5 / 50.00` — Cereja em caixas;
+- `3 / 3 / 1 / 0 / 20.00` — Saladete em caixas.
 
 Digite cada campo em uma linha. Para um nome personalizado, escolha o tipo 6
-e digite o nome antes da quantidade e do preço.
+e digite o nome antes da unidade, quantidade e preço.
 
 Por exemplo, para cadastrar **Caqui**, escolha **1 — Cadastrar** no menu
 principal, informe um código novo, escolha **6 — Digitar outro nome** e digite
-`Caqui`. Em seguida, informe as caixas e o preço. Também é possível usar nomes
+`Caqui`. Em seguida, escolha a unidade e informe a quantidade e o preço. Também é possível usar nomes
 como `Rosa`, `Amarelo` ou `Tomate da horta`, que aparecerão nas listagens,
 consultas e relatórios.
 
@@ -128,6 +138,11 @@ mostrar **140 caixas e R$ 19000.00**, com os dois produtos detalhados. Após uma
 entrada de 10 caixas de Débora, seu saldo passa a 110 e o resumo passa a
 **150 caixas e R$ 20500.00**.
 
+Para conferir um estoque com as duas unidades, cadastre `1 / 1 / 1 / 2 / 30.00`
+e `2 / 2 / 2 / 2.500 / 8.00`. Os subtotais serão R$ 60.00 e R$ 20.00; o resumo
+mostrará **2 caixas**, **2.500 kg** e **R$ 80.00**. Uma saída de `0.250` kg do
+segundo cadastro deixa seu saldo em **2.250 kg** e o valor geral em **R$ 78.00**.
+
 ## Estruturas utilizadas
 
 Toda a lógica está em `main`, com `printf` e `scanf`. O programa usa `if/else`,
@@ -141,14 +156,23 @@ a repetição das validações.
 Os cinco tipos prontos ficam em uma matriz de caracteres. Um `for` copia o nome
 escolhido para o cadastro, sem funções adicionais nem biblioteca de strings.
 Na exclusão individual, laços `for` deslocam os vetores e a matriz de nomes para
-preencher a posição removida, e o contador de cadastros é decrementado.
+preencher a posição removida, incluindo o vetor de unidades, e o contador de
+cadastros é decrementado.
+
+O vetor de unidades guarda a escolha de cada cadastro. As quantidades continuam
+em `int`: caixas são armazenadas diretamente; pesos são convertidos em gramas
+inteiras. Isso permite entradas e saídas como 0.100 kg e 0.200 kg sem deixar um
+resíduo de arredondamento ao retirar 0.300 kg. A exibição e o cálculo do subtotal
+convertem gramas para kg dividindo por 1000.0.
 
 Não há funções próprias além de `main`, structs, variáveis ponteiro, alocação
 dinâmica ou gravação de dados em arquivos. O `&` em `scanf` é necessário para
 ler as variáveis, conforme o uso básico de entrada de dados em C.
 
 As entradas numéricas são lidas em uma variável `double` para conferir a faixa
-e rejeitar frações antes da conversão para `int`. O limite inteiro é definido
+e validar a precisão antes da conversão para `int`. Na conversão de kg para
+gramas, uma tolerância de 0.000001 grama compensa apenas erros de representação
+binária. O limite inteiro é definido
 pela constante `LIMITE_INTEIRO`, com valor 2147483647 para o GCC/MinGW usado no
 Code::Blocks. Não há uso de `limits.h`. `float.h` fornece o limite do preço.
 Os preços são armazenados em `float`; os totais usam `double` e são exibidos
