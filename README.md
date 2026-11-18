@@ -180,6 +180,5 @@ com duas casas decimais.
 
 ## Entrega
 
-Preencha **nome completo, R.A. e turma** no comentário inicial e ajuste a data
-se necessário. Para a entrega no ambiente virtual, envie somente
+Para a entrega no ambiente virtual, envie somente
 **`estoque_tomates.c`**, conforme o enunciado.

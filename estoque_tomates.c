@@ -1,11 +1,3 @@
-/*
- * Estudante(s): PREENCHER NOME COMPLETO
- * R.A.: PREENCHER
- * Turma: PREENCHER
- * Data: 11/11/2026
- * Tema: gestao de estoque de tomates em caixas ou quilogramas.
- * Cadastro, consulta, movimentacao, relatorio e exclusao em memoria.
- */
 #include <stdio.h>
 #include <float.h>
 
